@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<div class="login-page">
+<div class="login-page" hidden>
 
     <header>Логотип</header>
 
@@ -15,7 +15,7 @@
         <div class="login-form__inputs">
             <input type="email" placeholder="Логин"/>
             <input type="password" placeholder="Пароль"/>
-            <a href="#">Восстановить пароль</a>
+            <a href="/components.html">Восстановить пароль</a>
         </div>
         <div class="login-form__buttons">
             <button class="buttons__submit primary">Вперед</button>
@@ -27,5 +27,37 @@
 
 </div>
 
+<div class="signup-page">
+
+    <header>Логотип</header>
+
+    <form class="signup-form">
+        <h2 class="signup-form__title">Добро пожаловать</h2>
+        <div class="signup-form__inputs">
+            <input name="email" type="email" placeholder="Логин"/>
+            <input name="password" type="password" placeholder="Пароль"/>
+            <input name="repeatPassword" type="password" placeholder="Повторите пароль"/>
+        </div>
+        <div class="signup-form__buttons">
+            <button type="submit" class="buttons__submit primary">Регистрация</button>
+            <button>Назад</button>
+        </div>
+        <p class="signup-form__error error"></p>
+    </form>
+
+    <footer>Мой сайт 2020</footer>
+
+</div>
+
+<div class="main-page" hidden>
+    <header>Логотип</header>
+    <div class="main-page__content"></div>
+    <button class="main-page__back">Назад</button>
+    <footer>Мой сайт 2020</footer>
+
+</div>
+
+
+<script src="main.js"></script>
 </body>
 </html>
