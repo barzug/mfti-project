@@ -13,21 +13,21 @@
     <form class="login-form">
         <h2 class="login-form__title">Добро пожаловать</h2>
         <div class="login-form__inputs">
-            <input type="email" placeholder="Логин"/>
-            <input type="password" placeholder="Пароль"/>
-            <a href="/components.html">Восстановить пароль</a>
+            <input name="email" type="email" placeholder="Логин"/>
+            <input name="password" type="password" placeholder="Пароль"/>
         </div>
         <div class="login-form__buttons">
-            <button class="buttons__submit primary">Вперед</button>
-            <button>Назад</button>
+            <button type="submit" class="buttons__submit primary">Вперед</button>
+            <button class="login-form__to-signup">Нет аккаунта</button>
         </div>
+        <p class="login-form__error error"></p>
     </form>
 
     <footer>Мой сайт 2020</footer>
 
 </div>
 
-<div class="signup-page">
+<div class="signup-page" hidden>
 
     <header>Логотип</header>
 
@@ -40,7 +40,7 @@
         </div>
         <div class="signup-form__buttons">
             <button type="submit" class="buttons__submit primary">Регистрация</button>
-            <button>Назад</button>
+            <button class="signup-form__to-login">Уже зареган</button>
         </div>
         <p class="signup-form__error error"></p>
     </form>
@@ -52,12 +52,18 @@
 <div class="main-page" hidden>
     <header>Логотип</header>
     <div class="main-page__content"></div>
-    <button class="main-page__back">Назад</button>
+    <button class="main-page__unlogin">Сменить пользователя</button>
     <footer>Мой сайт 2020</footer>
 
 </div>
 
+<div class="loading-page">
+    <div class="loading"></div>
 
+</div>
+
+<script src="utils/http.js"></script>
+<script src="userService/index.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

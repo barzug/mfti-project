@@ -64,7 +64,7 @@ app.get('/currentUser', function (req, res) {
 
 app.delete('/signout', function (req, res) {
   res.cookie('cookie', null, { expires: new Date(Date.now() + 1000 * 60 * 10) });
-  res.status(200).json(null);
+  res.status(200).json({});
 });
 
 
