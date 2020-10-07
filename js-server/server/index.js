@@ -2,12 +2,17 @@ const express = require('express');
 const body = require('body-parser');
 const cookie = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
+const cors = require('cors');
 
 const app = express();
 
 app.use(express.static('src'));
 app.use(body.json());
 app.use(cookie());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
 const users = {};
 const ids = {};
@@ -56,7 +61,7 @@ app.get('/currentUser', function (req, res) {
   const id = req.cookies['cookie'];
   const login = ids[id];
   if (!login || !users[login]) {
-    return res.status(401).end();
+    return res.status(401).json({ error: 'Не авторизованный пользователь' });
   }
 
   res.json({ id });

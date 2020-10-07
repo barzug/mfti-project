@@ -1,12 +1,16 @@
 import React from 'react'
 import styles from './index.module.css'
 import Button from '../Button'
+import UserService from "../../userService";
 
 export default function MainPage({history}) {
   function onChangeUser(event) {
     event.preventDefault();
 
-    history.push('signup')
+    UserService.logout().then(() => {
+      history.push('signup')
+    })
+
   }
 
   return (
