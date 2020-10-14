@@ -2,15 +2,14 @@ import React from 'react'
 import styles from './index.module.css'
 import Button from '../Button'
 import UserService from "../../userService";
+import {currentUserAction, logoutAction} from "../../actions/user";
+import {connect} from "react-redux";
 
-export default function MainPage({history}) {
+function MainPage({history, logout}) {
   function onChangeUser(event) {
     event.preventDefault();
 
-    UserService.logout().then(() => {
-      history.push('signup')
-    })
-
+    logout()
   }
 
   return (
@@ -20,3 +19,11 @@ export default function MainPage({history}) {
     </>
   )
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: (...args) => dispatch(logoutAction(...args))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(MainPage);

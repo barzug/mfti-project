@@ -4,8 +4,10 @@ import Input from '../Input'
 import Button from '../Button'
 
 import UserService from '../../userService'
+import {connect} from "react-redux";
+import {loginAction} from "../../actions/user";
 
-export default function LoginPage(props) {
+function LoginPage(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -24,15 +26,10 @@ export default function LoginPage(props) {
   function onLogin(event) {
     event.preventDefault();
 
-    UserService.login(email, password)
-      .then((user) => {
-        props.setUser(user);
-
-        props.history.push('/');
-      })
-      .catch((error) => {
-        setErrorText(error.error)
-      })
+    props.login(email, password).then((user) => {
+      console.log('1');
+      props.history.push('/');
+    })
   }
 
   function onToSignUp(event) {
@@ -56,3 +53,18 @@ export default function LoginPage(props) {
     </form>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    error: state.userReducer.error
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (...args) => dispatch(loginAction(...args))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+

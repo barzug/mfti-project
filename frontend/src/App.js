@@ -2,48 +2,17 @@ import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import SignupPage from './components/SignupPage'
 import MainPage from './components/MainPage'
+import PrivateRoute from './components/PrivateRoute'
 import styles from './App.module.css';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import UserService from "./userService";
 import LoginPage from "./components/LoginPage";
+import {connect, Provider} from 'react-redux'
+import {currentUserAction} from './actions/user'
 
-function PrivateRoute({user, loading, ...rest}) {
-  if (loading) {
-    return <h1>LOADING...</h1>
-  }
-
-  if (!user) {
-    return <Redirect
-      to={{
-        pathname: '/signup',
-      }}
-    />
-  }
-
-  return (
-    <Route
-      {...rest}
-    />
-  )
-}
-
-function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
+function App({fetchUser}) {
   useEffect(() => {
-    setLoading(true);
-
-    UserService.currentUser()
-      .then((user) => {
-        setUser(user)
-      })
-      .catch((error) => {
-        console.log('error', error)
-      })
-      .then(() => {
-        setLoading(false);
-      });
+    fetchUser()
   }, []);
 
 
@@ -54,9 +23,9 @@ function App() {
         <header>Логотип</header>
 
         <Switch>
-          <Route path="/signup" render={(props) => (<SignupPage setUser={setUser} {...props}/>)} />
-          <Route path="/login" render={(props) => (<LoginPage setUser={setUser} {...props}/>)}/>
-          <PrivateRoute path="*" component={MainPage} user={user} loading={loading}/>
+          <Route path="/signup" render={(props) => (<SignupPage {...props}/>)} />
+          <Route path="/login" render={(props) => (<LoginPage {...props}/>)}/>
+          <PrivateRoute path="*" component={MainPage}/>
         </Switch>
 
         <footer>Мой сайт 2020</footer>
@@ -66,4 +35,12 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUser: () => dispatch(currentUserAction())
+  }
+};
+
+const WrappedApp = connect(null, mapDispatchToProps)(App);
+
+export default WrappedApp;

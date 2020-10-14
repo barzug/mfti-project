@@ -4,6 +4,8 @@ import Input from '../Input'
 import Button from '../Button'
 
 import UserService from '../../userService'
+import {signupAction} from "../../actions/user";
+import {connect} from "react-redux";
 
 function isCorrectEmail(email) {
   return email.length >= 5
@@ -13,7 +15,7 @@ function isCorrectPassword(email) {
   return email.length >= 5
 }
 
-export default class SignupPage extends React.Component{
+class SignupPage extends React.Component{
   state = {
     email: '',
     password: '',
@@ -90,17 +92,10 @@ export default class SignupPage extends React.Component{
     }
 
 
-    UserService.signup(email, password)
-      .then((user) => {
-        this.props.setUser(user);
-
-
-        this.props.history.push('/');
-      })
-      .catch((error) => {
-        this.setState({errorText: error.error})
-      })
-
+    this.props.signup(email, password).then(() => {
+      console.log('1');
+      this.props.history.push('/');
+    })
   };
 
   onChangeEmail = (event) => {
@@ -133,3 +128,12 @@ export default class SignupPage extends React.Component{
     this.props.history.push('/login');
   }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signup: (...args) => dispatch(signupAction(...args))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(SignupPage);
